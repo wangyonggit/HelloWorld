@@ -19,7 +19,6 @@ import java.util.Stack;
 import javax.print.attribute.IntegerSyntax;
 
 
-
 public class HelloWorld {
 	
 	public static class TreeNode {
@@ -52,8 +51,8 @@ public class HelloWorld {
 		a.right = c;
 		b.left = d;
 		b.right = e;
-		//c.left = f;
-		//c.right = g;
+		c.left = f;
+		c.right = g;
 		
 		//List<List<Integer>> result = verticalOrder(a);
 //		connect(a);
@@ -63,6 +62,8 @@ public class HelloWorld {
 		//System.out.print("\n");
 		//System.out.print("Result = "+result);
 		
+		List<List<Integer>> result = travesal2(a);
+		System.out.print("In Order Result = "+result);
 //		List<Integer> result = inorderTraversal(a);
 //		System.out.print("In Order Result = "+result);
 //		
@@ -163,7 +164,7 @@ public class HelloWorld {
 		
 		
 		
-		int[] nums = {0};
+		int[] nums = {6,0,1,3,5};
 //		int[] preorder = {1,2,4,5,3,6,7};
 //		int[] inorder = {4,2,5,1,6,3,7};
 //		int[] postorder = {4,5,2,6,7,3,1};
@@ -216,9 +217,9 @@ public class HelloWorld {
 		//movezero(nums);
 		
 
-		int result = hIndex2(nums);	
-		System.out.print("\n");
-		System.out.print("Result = "+result);
+		//int result = hIndex(nums);	
+		//System.out.print("\n");
+		//System.out.print("Result = "+result);
 
 		//for(int[] p:result)
 		//{
@@ -232,142 +233,7 @@ public class HelloWorld {
 		//System.out.print("]");
 
 	}
-	public static int hIndex2(int[] citations) {
-//        int length = citations.length;
-//        if (length == 0) {
-//        	return 0;
-//        }
-//        
-//        int[] count = new int[length + 1];
-//
-//		for (int i = 0; i < length; i++) {
-//			if (citations[i] > length)
-//				count[length]++;
-//			else
-//				count[citations[i]]++;
-//		}
-//
-//		int result = 0;
-//		for (int i = count.length - 1; i >= 0; i--) {
-//			result += count[i];
-//			if (result > i)
-//				return result;
-//		}
-//
-//		return 0;
-		
-		int length = citations.length;
-        if (length == 0) {
-        	return 0;
-        }
-        
-        int[] array2 = new int[length + 1];
-        for (int i = 0; i < length; i++) {
-        	if (citations[i] > length) {
-        		array2[length] += 1;
-        	} else {
-        		array2[citations[i]] += 1;
-        	}
-        }
-        int t = 0;
-        int result = 0;
 
-        for (int i = length; i >= 0; i--) {
-        	t = t + array2[i];
-        	if (t >= i) {
-        		return i;
-        	}
-        }
-        return 0;
-	}
-
-	public static int hIndex(int[] citations) {
-		   if (citations.length<=0)
-		         return 0;  
-		     
-		    Arrays.sort(citations);
-		    for( int i = 0; i < citations.length/2; ++i ) 
-		    { 
-		      int temp = citations[i]; 
-		      citations[i] = citations[citations.length - i - 1]; 
-		      citations[citations.length - i - 1] = temp; 
-		    }
-		    	 
-			for (int i=0; i<citations.length; i++)
-		    {
-		    	if (i>=citations[i] )
-		    	{
-		    		return i;
-		    	}
-		    }
-		        
-		    return citations.length;
-		}
-
-	
-public static List<Integer> lexicalOrder2(int n) {
-int curr = 1;
-List<Integer> result = new ArrayList<>();
-for (int i = 1; i <= n; i++) {
-	result.add(curr);
-	if (curr * 10 <= n)
-		curr = curr * 10;
-	else if (curr % 10 != 9 && curr + 1 <= n)
-		curr = curr + 1;
-	else {
-		while ((curr / 10) % 10 == 9)
-			curr = curr / 10;
-		curr = curr / 10 + 1;
-
-	}
-}
-	return result;
-}
-	public static List<String> findItinerary2(String[][] tickets) {
-	    Map<String, PriorityQueue<String>> targets = new HashMap<>();
-	    for (String[] ticket : tickets)
-	    {
-	    	if (!targets.containsKey(ticket[0]))
-	    	{
-	    		targets.put(ticket[0], new PriorityQueue<String>());
-	    	}
-	    	targets.get(ticket[0]).add(ticket[1]);
-	    }
-	    
-	    List<String> route = new LinkedList();
-	    Stack<String> stack = new Stack<>();
-	    stack.push("JFK");
-	    while (!stack.empty()) {
-	    	String from = stack.peek();
-	        while (targets.containsKey(from) && !targets.get(from).isEmpty())
-	        {
-	        	String to = targets.get(from).poll();
-	            stack.push(to);
-	            from = to;
-	        }
-	        route.add(0, stack.pop());
-	    }
-	    return route;
-	}
-
-
-
-    
-public static boolean verifyPreorder(int[] preorder) {
-
-	Stack<Integer> mStack = new Stack<>();
-	int minLow = Integer.MIN_VALUE;
-	for (int val : preorder) {
-		if (val < minLow)
-			return false;
-		while (!mStack.empty() && val > mStack.peek()) {
-			minLow = mStack.pop();
-		}
-
-		mStack.push(val);
-	}
-	return true;
-}
 
 public static List<List<Integer>> travesal(TreeNode root) {
 	List<List<Integer>> result = new ArrayList<List<Integer>>();
